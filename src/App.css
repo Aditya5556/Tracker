@@ -1,0 +1,119 @@
+/* General Styles */
+.home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f7fb;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
+
+.content-container {
+  text-align: center;
+  width: 80%;
+  max-width: 900px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading and Subheading */
+.heading {
+  font-size: 2.5rem;
+  color: #4caf50;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+}
+
+.sub-heading {
+  font-size: 1.3rem;
+  color: #777;
+  margin-bottom: 30px;
+  opacity: 0;
+  animation: fadeIn 2s forwards 0.5s;
+}
+
+/* Quote Styling */
+.quote-container {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f4f7fb;
+  border-left: 5px solid #4caf50;
+  font-style: italic;
+  opacity: 0;
+  animation: fadeIn 2s forwards 1s;
+}
+
+.quote {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #333;
+}
+
+/* Cards for Dummy Content */
+.dummy-cards {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.card {
+  width: 30%;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color: #4caf50;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #555;
+  font-size: 1rem;
+}
+
+/* Floating Icon */
+.floating-icon {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  font-size: 3rem;
+  color: #4caf50;
+  animation: floatIcon 2s ease-in-out infinite;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatIcon {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

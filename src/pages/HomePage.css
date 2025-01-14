@@ -1,0 +1,94 @@
+
+.home-page {
+    padding: 20px;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .motivational-message {
+    padding: 20px;
+    margin: 20px 0;
+    background-color: #4caf50;
+    color: white;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    width: 80%;
+    text-align: center;
+    animation: fadeIn 2s forwards;
+  }
+  
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  
+  .habit-list {
+    width: 80%;
+    margin: 10px 0;
+  }
+  
+  .habit-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 15px;
+    margin: 5px 0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .habit-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  .habit-item.completed {
+    background-color: #dff0d8;
+  }
+  
+  
+  .progress-bar {
+    width: 100%;
+    background-color: #e6e6e6;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .progress-bar-inner {
+    height: 20px;
+    background-color: #4caf50;
+    width: 0;
+    transition: width 0.5s ease;
+  }
+  
+  .habit-item .progress-bar {
+    width: 80%;
+  }
+  
+
+  input[type="text"], button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  button:hover {
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+  }
+  
