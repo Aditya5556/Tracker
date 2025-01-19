@@ -1,94 +1,152 @@
-import React, { useState, useEffect } from "react";
-import HabitForm from "../components/HabitForm";
-import HabitList from "../components/HabitList";
-import HabitProgress from "../components/HabitProgress";
-import AnimatedHeader from "../components/AnimatedHeader";
-import AnimatedCard from "../components/AnimatedCard";
-import ScrollSection from "../components/ScrollSection";
-import HoverEffect from "../components/HoverEffect";
+import React, { useState } from "react";
+import { Card, Input, Button, List, Typography, Progress } from "antd";
+import { PlusOutlined, CheckOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  LineElement,
+  PointElement,
+  LinearScale,
+  CategoryScale,
+} from "chart.js";
+import "./HomePage.css";
 
-import "./HomePage.css"; // Import custom CSS for animations
+// Register chart.js components
+ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale);
 
-function HomePage() {
+const { Title, Text } = Typography;
+
+const HomePage = () => {
+  const [newHabit, setNewHabit] = useState("");
   const [habits, setHabits] = useState([]);
-  const [motivationalMessage, setMotivationalMessage] = useState("");
+  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
 
-  // Sample motivational messages
-  const motivationalQuotes = [
-    "Keep pushing, you're doing great!",
-    "Believe in yourself and all that you are.",
-    "Success is the sum of small efforts, repeated day in and day out.",
-    "The only way to do great work is to love what you do.",
-    "Don't watch the clock; do what it does. Keep going!"
-  ];
-
-  // Fetch a random motivational quote
-  const getRandomMessage = () => {
-    const randomMessage =
-      motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
-    setMotivationalMessage(randomMessage);
-  };
-
-  const addHabit = (name) => {
-    setHabits([...habits, { name, completed: false, progress: 0 }]);
+  const addHabit = () => {
+    if (newHabit) {
+      const updatedHabits = [
+        ...habits,
+        { name: newHabit, completed: false, progress: 0 },
+      ];
+      setHabits(updatedHabits);
+      setNewHabit("");
+      updateChartData(updatedHabits);
+    }
   };
 
   const toggleHabit = (index) => {
-    const updatedHabits = habits.map((habit, i) =>
-      i === index ? { ...habit, completed: !habit.completed } : habit
-    );
+    const updatedHabits = [...habits];
+    updatedHabits[index].completed = !updatedHabits[index].completed;
     setHabits(updatedHabits);
+  };
 
-    // Show a motivational message when a task is completed
-    if (updatedHabits[index].completed) {
-      getRandomMessage();
-    }
+  const updateProgress = (index, progress) => {
+    const updatedHabits = [...habits];
+    updatedHabits[index].progress = progress;
+    setHabits(updatedHabits);
+    updateChartData(updatedHabits);
   };
 
   const deleteHabit = (index) => {
     const updatedHabits = habits.filter((_, i) => i !== index);
     setHabits(updatedHabits);
+    updateChartData(updatedHabits);
   };
 
-  const updateHabit = (index, newName) => {
-    const updatedHabits = habits.map((habit, i) =>
-      i === index ? { ...habit, name: newName } : habit
-    );
-    setHabits(updatedHabits);
-  };
-
-  const updateProgress = (index, newProgress) => {
-    const updatedHabits = habits.map((habit, i) =>
-      i === index ? { ...habit, progress: newProgress } : habit
-    );
-    setHabits(updatedHabits);
+  const updateChartData = (updatedHabits) => {
+    const labels = updatedHabits.map((habit) => habit.name);
+    const progressData = updatedHabits.map((habit) => habit.progress);
+    setChartData({
+      labels,
+      datasets: updatedHabits.map((habit, index) => ({
+        label: `${habit.name} Progress (%)`,
+        data: progressData,
+        borderColor: `rgba(${index * 60 + 100}, ${index * 60 + 50}, ${index * 60 + 30}, 1)`, // Dark color for the lines
+        backgroundColor: `rgba(${index * 60 + 100}, ${index * 60 + 50}, ${index * 60 + 30}, 0.2)`, // Lighter background for each line
+        borderWidth: 2,
+        fill: true,
+        lineTension: 0, // Makes the lines straight
+        pointRadius: 5, // Points on the line for interactivity
+        pointHoverRadius: 7,
+        pointHoverBackgroundColor: "rgba(255, 255, 255, 1)",
+        pointBackgroundColor: `rgba(${index * 60 + 100}, ${index * 60 + 50}, ${index * 60 + 30}, 1)`,
+      })),
+    });
   };
 
   return (
     <div className="home-page">
-      {/* Habit Form */}
-      <HabitForm addHabit={addHabit} />
+      <Title level={2} className="title">
+        Habit Tracker
+      </Title>
 
-      {/* Motivational message */}
-      {motivationalMessage && (
-        <div className="motivational-message fade-in">
-          <h2>{motivationalMessage}</h2>
-        </div>
-      )}
+      {/* Habit Input and Add Button */}
+      <Card className="add-habit-card">
+        <Input
+          value={newHabit}
+          onChange={(e) => setNewHabit(e.target.value)}
+          placeholder="Add a new habit"
+          className="habit-input"
+        />
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={addHabit}
+          className="add-button"
+        >
+          Add Habit
+        </Button>
+      </Card>
 
       {/* Habit List */}
-      <HabitList
-        habits={habits}
-        toggleHabit={toggleHabit}
-        deleteHabit={deleteHabit}
-        updateHabit={updateHabit}
-        updateProgress={updateProgress}
+      <List
+        className="habit-list"
+        dataSource={habits}
+        renderItem={(habit, index) => (
+          <List.Item
+            actions={[
+              <Button
+                type="text"
+                icon={<CheckOutlined />}
+                onClick={() => toggleHabit(index)}
+                style={{ color: habit.completed ? "green" : "gray" }}
+              />,
+              <Button
+                type="text"
+                icon={<DeleteOutlined />}
+                onClick={() => deleteHabit(index)}
+                danger
+              />,
+            ]}
+            className={`habit-item ${habit.completed ? "completed" : ""}`}
+          >
+            <div>
+              <span
+                className={habit.completed ? "habit-name completed-text" : "habit-name"}
+              >
+                {habit.name}
+              </span>
+              <Progress
+                percent={habit.progress}
+                size="small"
+                onClick={() =>
+                  updateProgress(index, Math.min(habit.progress + 10, 100))
+                }
+              />
+            </div>
+          </List.Item>
+        )}
+        bordered
       />
 
-      {/* Habit Progress Tracker */}
-      <HabitProgress habits={habits} />
+      {/* Progress Chart */}
+      <Card className="chart-card">
+        <Title level={4} className="chart-title">
+          Progress Chart
+        </Title>
+        <Line data={chartData} options={{ responsive: true }} />
+      </Card>
     </div>
   );
-}
+};
 
 export default HomePage;

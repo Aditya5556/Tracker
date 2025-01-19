@@ -1,94 +1,65 @@
+.hp-background {
+  position: relative;
+  width: 100%; /* Adjust to fit your container's width */
+  height: 500px; /* Adjust height as per requirement */
+  background-image: url('https://cdn.dribbble.com/users/325593/screenshots/7727910/media/9828307cca012ac9b9f8be7fa0b89257.jpg?resize=800x600&vertical=center');
+  background-size: cover; /* Ensures the image covers the container */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents tiling of the image */
+    min-height: 100vh; /* Full viewport height */
+  
+  
+}
 
 .home-page {
-    padding: 20px;
-    background-color: #f8f9fa;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .motivational-message {
-    padding: 20px;
-    margin: 20px 0;
-    background-color: #4caf50;
-    color: white;
-    font-size: 1.5rem;
-    border-radius: 10px;
-    width: 80%;
-    text-align: center;
-    animation: fadeIn 2s forwards;
-  }
-  
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  
-  .habit-list {
-    width: 80%;
-    margin: 10px 0;
-  }
-  
-  .habit-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    padding: 15px;
-    margin: 5px 0;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-  }
-  
-  .habit-item:hover {
-    transform: translateY(-5px);
-  }
-  
-  .habit-item.completed {
-    background-color: #dff0d8;
-  }
-  
-  
-  .progress-bar {
-    width: 100%;
-    background-color: #e6e6e6;
-    border-radius: 5px;
-    overflow: hidden;
-  }
-  
-  .progress-bar-inner {
-    height: 20px;
-    background-color: #4caf50;
-    width: 0;
-    transition: width 0.5s ease;
-  }
-  
-  .habit-item .progress-bar {
-    width: 80%;
-  }
-  
+  position: relative;
+  width: 100vw; /* Full width of the viewport */
+  height: 100vh; /* Full height of the viewport */
+  background-image: url('https://cdn.dribbble.com/users/325593/screenshots/7727910/media/9828307cca012ac9b9f8be7fa0b89257.jpg?resize=800x600&vertical=center');
+  background-size: cover; /* Ensures the image covers the viewport */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents tiling */
+  overflow: auto;
+  padding: 20px;
+}
 
-  input[type="text"], button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    margin: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  button:hover {
-    background-color: #4caf50;
-    color: white;
-    cursor: pointer;
-  }
-  
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1d1d1d;
+}
+/* Habit Tracker Styles */
+.add-habit-card {
+  margin: 20px auto;
+  padding: 10px;
+  max-width: 600px;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.habit-input {
+  width: 70%;
+  margin-right: 10px;
+}
+
+.add-button {
+  vertical-align: top;
+}
+
+.habit-list {
+  margin-top: 20px;
+  background-color: #fff;
+}
+
+.habit-item {
+  padding: 10px;
+}
+
+.habit-name {
+  font-size: 16px;
+}
+
+.completed-text {
+  text-decoration: line-through;
+  color: gray;
+}
